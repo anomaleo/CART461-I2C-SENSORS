@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"extensions.ignoreRecommendations": true,
+		"files.associations": {
+			"*.ino": "cpp",
+			"vector": "cpp",
+			"iosfwd": "cpp",
+			"iterator": "cpp",
+			"string": "cpp"
+		}
+	}
+}

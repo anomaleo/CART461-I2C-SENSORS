@@ -1,0 +1,34 @@
+
+"url": "https://data.mongodb-api.com/app/data-cofio/endpoint/data/v1/action/insertOne",
+
+"header": {
+	"apiKey": "oopsydaisy"
+}
+
+"json": {
+	"dataSource": "Cluster0",
+  	"database": "CONCORDIA-MONGO",
+  	"collection": "CSLAB-ENV-SGP30-GRID",
+  	"document": {
+    "sensor": "{{sensor}}",
+    "device-name": "{{device-name}}",
+    "geolocation": "{{geolocation}}",
+    "latitude": "{{latitude}}",
+    "longitude": "{{longitude}}",
+    "accuracy": "{{accuracy}}",
+    "geojson": [ {{latitude}}, {{longitude}} ],
+    "CO2-PPM": "{{CO2-PPM}}",
+    "TVOC-PPB": "{{TVOC-PPB}}",
+    "H2-RAW": "{{H2-RAW}}",
+    "ETHANOL-RAW": "{{ETHANOL-RAW}}",
+    "sgp30-airquality": [ {{CO2-PPM}}, {{TVOC-PPB}}, {{H2-RAW}}, {{ETHANOL-RAW}} ],
+    "grideye": [ {{grideye}} ],
+    "hotpixelindex": "{{hotpixelindex}}",
+    "hotpixelvalue": "{{hotpixelvalue}}",
+    "hotpixel": [ {{hotpixelindex}}, {{hotpixelvalue}} ],
+    "ts": "{{PARTICLE_PUBLISHED_AT}}",
+    "deviceid": "{{PARTICLE_DEVICE_ID}}"
+  }
+}
+
+
