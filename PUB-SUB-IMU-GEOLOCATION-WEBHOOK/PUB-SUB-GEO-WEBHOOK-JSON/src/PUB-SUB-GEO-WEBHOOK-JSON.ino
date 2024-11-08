@@ -25,6 +25,8 @@ IMU imu;
 #include "google-maps-device-locator.h"
 GoogleMapsDeviceLocator locator;
 
+SerialLogHandler logHandler;
+
 /* JSON PARSER AND GENERATOR */
 #include "JsonParserGeneratorRK.h"
 

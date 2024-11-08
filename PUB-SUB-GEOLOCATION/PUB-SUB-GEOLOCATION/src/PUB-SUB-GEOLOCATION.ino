@@ -110,54 +110,6 @@ void setup() {
 }
 
 void loop() { 
-  /* IMU RUN @ 50Hz */
-  imu.loop();
-
-  /* UPDATE IMU READINGS: ACCELERO[3], MAGENTO[3], GYRO[3], YAW, PITCH, ROLL, HEADING */
-  /* ACCESS UPDATED IMU STATE */
-  accel = imu.getAccelerometer();  
-  magnetom = imu.getMagnetometer();
-  gyro = imu.getGyrometer();
-  yaw = imu.getYaw();
-  pitch = imu.getPitch();
-  roll = imu.getRoll();
-  magnitude = imu.getMagnitude();
-
-  /* GOOGLE GEOLOCATION LOOP - OPTIONAL (CAN BE REMOVED) */
-  locator.loop(); // 
-
-  /* EVENT WHICH INDUCES A GOOGLE GEOLOCATION REQUEST & PARTICLE PUBLISH ROUTINE */
-  if( digitalRead(B_TN) == LOW ) {
-    /* REQUEST LOCATION FROM GOOGLE */
-    locator.publishLocation();
-
-    digitalWrite(R_LED, HIGH);
-    delay(1000);
-  }
-}
-
-/* PARTICLE CLOUD GOOGLE GEOLATION: LAT, LONG AND ACCRUACY - CALLBACK */
-void locationCallback(float lat, float lon, float accu) {
-  // Handle the returned location data for the device. This method is passed three arguments:
-  // - Latitude
-  // - Longitude
-  // - Accuracy of estimated location (in meters)
-  latitude = lat;
-  longitude = lon;
-  accuracy = accu;
-
-  digitalWrite(R_LED, LOW);
-  digitalWrite(B_LED, HIGH);
-  delay(1000);
-  
-  /* 
-    PREPARE DATA TO BE PUBLISHED ONTO PARTICLE CLOUD - USE snprintf() to create formatted string 
-    STRING FORMAT (COMMA DELIMITED):
-    latitude,longitude,accuracy,accel[0],accel[1],accel[2],magnetom[0],magnetom[1],magnetom[2],gyro[0],gyro[1],gyro[2],yaw, pitch, roll, heading,
-  */
-  snprintf(buffer, sizeof(buffer), "%.07f,%.07f,%.07f,%.02f,%.02f,%.02f,%.02f,%.02f,%.02f,%.02f,%.02f,%.02f,%.02f,%.02f,%.02f,%.02f", \
-  lat, lon, accu, accel[0],accel[1],accel[2],magnetom[0],magnetom[1],magnetom[2],gyro[0],gyro[1],gyro[2],yaw,pitch,roll,magnitude);
-
   if( Particle.publish("cslab-proline-imu-geo", buffer) ) Serial.println ("cslab-proline-imu-geo published");
   digitalWrite(B_LED, LOW);
   digitalWrite(G_LED, HIGH);

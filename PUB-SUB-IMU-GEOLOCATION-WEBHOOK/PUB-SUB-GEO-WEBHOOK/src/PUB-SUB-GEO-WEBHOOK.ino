@@ -31,6 +31,9 @@ SYSTEM_THREAD(ENABLED);
 /* HOW TO CONNECT TO WiFi & INTERNET: AUTOMATIC, SEMI_AUTOMATIC, MANUAL */
 SYSTEM_MODE(AUTOMATIC); // DONE BY DEFAULT
 
+/*View logs with CLI using 'particle serial monitor --follow' */
+SerialLogHandler logHandler(LOG_LEVEL_TRACE); //LOG_LEVEL_INFO
+
 #define DEBUG_LED D7 // SMALL BLUE LED NEXT USB CONNECTOR (RIGHT OF USB)
 #define R_LED     D6 // RED LED
 #define G_LED     D5 // GREEN LED
@@ -74,6 +77,8 @@ String geolocation() {
   return buffer;
 }
 
+unsigned long _t = 0;
+
 void setup() {
   /* PARTICLE CLOUD INTENTIONS ALWAYS DECLARED AND INIT'ED IN VOID SETUP */
   Particle.variable("location", "ME @ MTL", STRING);
@@ -88,7 +93,8 @@ void setup() {
 
   /* GEOLATION: LAT, LONG AND ACCRUACY - GOOGLE MAPS */
   locator.withEventName("cslablocation");
-  locator.withSubscribe(locationCallback).withLocateOnce();
+  locator.withSubscribe(locationCallback); //.withLocateOnce();
+  //locator.withSubscribe(locationCallback).withLocatePeriodic(30);
   //locator.withLocatePeriodic(32) // GEOLOCATE EVERY 32 SECONDS
   //locator.withSubscribe(locationCallback); // REQUIRES AN EVENT
 
@@ -108,7 +114,8 @@ void setup() {
   pinMode(B_TN, INPUT_PULLUP); // NO RESISTOR
 
   delay(5); // Force Serial.println in void setup()
-  Serial.println("Completed void setup");
+  // Serial.println("Completed void setup");
+  Log.info("Completed void setup");
 }
 
 void loop() { 
@@ -129,11 +136,11 @@ void loop() {
   locator.loop(); // 
 
   /* EVENT WHICH INDUCES A GOOGLE GEOLOCATION REQUEST & PARTICLE PUBLISH ROUTINE */
-  if( digitalRead(B_TN) == LOW ) {
+  if( millis() - _t > 10000 ) { 
     /* REQUEST LOCATION FROM GOOGLE */
     locator.publishLocation();
-
-    digitalWrite(R_LED, HIGH);
+    _t = millis();
+    Log.info("locate me");
     delay(1000);
   }
 }
@@ -150,6 +157,7 @@ void locationCallback(float lat, float lon, float accu) {
 
   digitalWrite(R_LED, LOW);
   digitalWrite(B_LED, HIGH);
+  Log.info("callback");
   delay(1000);
   
   /* IN THIS PROGRAM - OUR INTENTION IS TO PUBLISH DATA TO THE PARTICLE CLOUD PLATFORM */

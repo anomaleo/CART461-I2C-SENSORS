@@ -2,7 +2,7 @@
 //       THIS IS A GENERATED FILE - DO NOT EDIT       //
 /******************************************************/
 
-#line 1 "/Users/eo/Downloads/PUB-SUB-IMU-GEOLOCATION-WEBHOOK/PUB-SUB-GEO-WEBHOOK-JSON/src/PUB-SUB-GEO-WEBHOOK-JSON.ino"
+#line 1 "/Users/eo/Desktop/CART461/CART461-I2C-SENSORS/PUB-SUB-IMU-GEOLOCATION-WEBHOOK/PUB-SUB-GEO-WEBHOOK-JSON/src/PUB-SUB-GEO-WEBHOOK-JSON.ino"
 /********************************************************************************
  * Project PUB-SUB GEOLOACTION 
  * Description: This example will illustrate how to fully exploit the Particle 
@@ -33,12 +33,14 @@ void setup();
 void loop();
 void locationCallback(float lat, float lon, float accu);
 void cslabasparagineimugeo(const char *event, const char *data);
-#line 22 "/Users/eo/Downloads/PUB-SUB-IMU-GEOLOCATION-WEBHOOK/PUB-SUB-GEO-WEBHOOK-JSON/src/PUB-SUB-GEO-WEBHOOK-JSON.ino"
+#line 22 "/Users/eo/Desktop/CART461/CART461-I2C-SENSORS/PUB-SUB-IMU-GEOLOCATION-WEBHOOK/PUB-SUB-GEO-WEBHOOK-JSON/src/PUB-SUB-GEO-WEBHOOK-JSON.ino"
 IMU imu;
 
 /* PARTICLE CLOUD GOOGLE MAPS INTEGRATION */
 #include "google-maps-device-locator.h"
 GoogleMapsDeviceLocator locator;
+
+SerialLogHandler logHandler;
 
 /* JSON PARSER AND GENERATOR */
 #include "JsonParserGeneratorRK.h"
